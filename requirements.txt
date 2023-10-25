@@ -1,0 +1,11 @@
+asgiref
+Django
+djangorestframework
+Pillow
+pip
+psycopg2-binary
+pytz
+setuptools
+sqlparse
+tzdata
+wheel
