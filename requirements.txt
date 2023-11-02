@@ -9,3 +9,4 @@ setuptools
 sqlparse
 tzdata
 wheel
+django-filter
