@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'django_filters',
+    'rest_framework_simplejwt',
 
     'users',
     'spa',
@@ -136,3 +137,17 @@ EMAIL_USE_SSL = False
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+# Настройки JWT-токенов
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
+    ),
+}

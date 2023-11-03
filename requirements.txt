@@ -1,6 +1,6 @@
 asgiref
-Django
-djangorestframework
+Django~=4.2.6
+djangorestframework~=3.14.0
 Pillow
 pip
 psycopg2-binary
@@ -9,4 +9,8 @@ setuptools
 sqlparse
 tzdata
 wheel
-django-filter
+django-filter~=23.3
+simplejwt
+
+django-perms~=2.1.0
+Faker~=19.13.0

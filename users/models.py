@@ -1,5 +1,18 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class UserRoles(models.TextChoices):
+    """
+        Класс перечисления для определения ролей пользователя.
+
+        Attributes:
+            MEMBER (str): Значение роли 'member'.
+            MODERATOR (str): Значение роли 'moderator'.
+    """
+    MEMBER = 'member', _('member')
+    MODERATOR = 'moderator', _('moderator')
 
 
 class User(AbstractUser):
@@ -11,5 +24,3 @@ class User(AbstractUser):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
-
-

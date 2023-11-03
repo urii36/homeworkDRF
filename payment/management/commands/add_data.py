@@ -1,5 +1,8 @@
 from django.core.management.base import BaseCommand
-from users.models import User
+
+import users
+from config import settings
+from users.models import User, UserRoles
 from spa.models import Course, Lesson
 from payment.models import Payment
 from faker import Faker
@@ -29,8 +32,40 @@ class Command(BaseCommand):
         Payment.objects.all().delete()
         Lesson.objects.all().delete()
         Course.objects.all().delete()
+        User.objects.all().delete()
 
+        super_user = User.objects.create(
+            email=settings.EMAIL_HOST_USER,
+            first_name='Admin',
+            last_name='OnlineTraining',
+            is_staff=True,
+            is_superuser=True,
+            is_active=True,
+        )
+        super_user.set_password('140386Odd')
+        super_user.save()
+        moderator_user = User.objects.create(
+            email='kun-140386-b@yandex.ru',
+            first_name='Admin',
+            last_name='OnlineTraining',
+            role=UserRoles.MODERATOR
+        )
+        moderator_user.set_password('140386Odd12')
+        moderator_user.save()
         users = []
+
+        for _ in range(5):
+            email = fake.email()
+            phone = fake.numerify()
+            country = fake.country()
+            first_name = fake.first_name()
+            last_name = fake.last_name()
+            user = User.objects.create(email=email, phone=phone, country=country,
+                                       first_name=first_name, last_name=last_name)
+            user.set_password('140386Odd12')
+            user.save()
+            users.append(user)
+
         for _ in range(5):
             email = fake.email()
             password = fake.password()
