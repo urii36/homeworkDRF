@@ -14,3 +14,5 @@ simplejwt
 
 django-perms~=2.1.0
 Faker~=19.13.0
+
+pytest-django
