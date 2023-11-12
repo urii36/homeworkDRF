@@ -9,22 +9,28 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
+import os
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nqi!*l6+ea4(zdh7mp*q9q_k2=itqinwrlo!c32&#4um)oghd$'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+DOMAIN_NAME = os.getenv('DOMAIN_NAME')
 
 # Application definition
 
@@ -37,8 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'django_filters',
     'rest_framework_simplejwt',
+    'django_filters',
+    'drf_yasg',
+    'rest_framework.authtoken',
 
     'users',
     'spa',
@@ -82,9 +90,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'online_training',
+        'NAME': os.getenv('DATABASES_NAME'),
         'USER': 'postgres',
-        'PASSWORD': 140386,
+        'PASSWORD': os.getenv('DATABASES_PASSWORD'),
     }
 }
 
@@ -129,15 +137,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "kazan313131@gmail.com"
-EMAIL_HOST_PASSWORD = "lqpv hiqy rjzv jsdm"
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
 
 # Настройки JWT-токенов
 REST_FRAMEWORK = {
@@ -150,4 +157,11 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny',
     ),
+}
+
+STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }

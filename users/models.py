@@ -21,6 +21,7 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='users/', null=True, blank=True, verbose_name='Аватар')
     phone = models.CharField(max_length=35, null=True, blank=True, verbose_name='Телефон')
     country = models.CharField(max_length=35, null=True, blank=True, verbose_name='Страна')
+    role = models.CharField(max_length=9, choices=UserRoles.choices, default=UserRoles.MEMBER)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
