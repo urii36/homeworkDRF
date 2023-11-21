@@ -2,6 +2,7 @@ from rest_framework import viewsets, generics, status
 from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+from spa.tasks import send_email_course_update
 
 from permissions import IsOwner, IsModerator
 from spa.models import Course, Lesson, Subscription
@@ -25,6 +26,13 @@ class CourseViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+
+        send_email_course_update.delay(instance.pk)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class LessonListAPIView(ListAPIView):
