@@ -8,6 +8,7 @@ from users.models import User
 @shared_task()
 def user_activity_check():
     '''Периодическая задача - проверка активности пользователя (если нет активности 30 дней - блокировка)'''
+    print(1111)
     users = User.objects.all()
     for user in users:
         if user.last_login:

@@ -59,7 +59,7 @@ class Command(BaseCommand):
         for _ in range(5):
             email = fake.email()
             phone = fake.numerify()
-            country = fake.country()
+            country = fake.country()[:35]
             first_name = fake.first_name()
             last_name = fake.last_name()
             user = User.objects.create(email=email, phone=phone, country=country,
